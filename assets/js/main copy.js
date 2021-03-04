@@ -1,40 +1,33 @@
-// ------------------------ Main Page
-const mainpage = document.querySelector("#container");
-mainpage.id = "mainpage";
-
-const welcome = document.querySelector("#welcome");
-welcome.id = "welcome";
-
-// ------------------------ Log In
 const containerLogIn = document.createElement("div");
 containerLogIn.id = "containerLogIn";
 const body = document.querySelector("body");
 body.appendChild(containerLogIn);
 
-const formular = document.createElement("form");
-formular.id = "form";
-containerLogIn.appendChild(formular);
+const mainpage = document.createElement("div");
+mainpage.id = "mainpage";
+body.appendChild(mainpage);
 
-const loginHeadline = document.createElement("h1");
-loginHeadline.id = "loginHeadline";
-loginHeadline.innerHTML = "> Login"
-form.appendChild(loginHeadline);
+const welcome = document.createElement("p");
+welcome.id = "welcome";
+mainpage.appendChild(welcome);
+
+const formular = document.createElement("form");
+containerLogIn.appendChild(formular);
 
 let userNameInput = document.createElement("input");
 formular.appendChild(userNameInput);
 userNameInput.name = "userName";
-userNameInput.id = 'userNameInput';
-userNameInput.placeholder = "name";
+userNameInput.placeholder = "Name";
 userNameInput.type = "txt";
+
 
 let userPasswort = document.createElement("input");
 formular.appendChild(userPasswort);
 userPasswort.name = "passwort";
 userPasswort.placeholder = "passwort";
-userPasswort.type = "password";
+userPasswort.type = "passwort";
 
 const submitButton = document.createElement("input");
-submitButton.id = "submitButton";
 formular.appendChild(submitButton);
 submitButton.name = "button";
 submitButton.value = "Submit";
@@ -57,7 +50,7 @@ function enterMainPage(){
 
     containerLogIn.classList.remove("displayBlock");
     containerLogIn.classList.add("displayHide");
-    mainpage.classList.remove("displayBlur");
+    mainpage.classList.remove("displayHide");
     showName();
     setCookie("userName", userName, 1);
     setCookie("passwort", passwort, 1);
@@ -67,28 +60,20 @@ function enterMainPage(){
 
 // --------------------- User Check
 let welcomeName = document.querySelector('#welcome').innerHTML;
-const info = document.createElement('p');
-formular.appendChild(info);
 
 submitButton.addEventListener('click', (e) =>{
     e.preventDefault();
     const user = USERS.find(item => item.name === userNameInput.value);
-    const password = USERS.find(item => item.secret === userPasswort.value);
+
 
     if (user){
-        welcomeName = user.name;
+        welcomeName = ('> Welcome ' + user.name);
         if (user.secret.toLowerCase() === userPasswort.value.toLowerCase()){
             console.log(userPasswort.value);
             enterMainPage();
           }
-    } else if (!user){
-        userNameInput.style.color = 'red';
-        info.innerHTML = 'Name does not exist';
-        info.style.color = 'red'
-    } else if (!password) {
-        userPasswort.style.color= 'red';
-        info.innerHTML = 'Password does not exist';
-        info.style.color = 'red'
+    } else {
+        console.log('User not existing')
     }
 });
 
@@ -101,14 +86,13 @@ function checkCookie(){
     loginPage()
   } else {
     welcomeName = getCookie("userName");
-    showName();
     mainpage.classList.add("displayBlock");
     containerLogIn.classList.add("displayHide");
   }
 };
 
 function loginPage(){
-  mainpage.classList.add("displayBlur");
+  mainpage.classList.add("displayHide");
 };
 
 
@@ -145,20 +129,4 @@ function setCookie(cname, cvalue, exdays) {
     return "";
   }  
 
-
-  // ------------------------ Log out
-const logout = document.querySelector('#logout');
-
-logout.addEventListener('click', (e)=>{
-  deleteCookie('userName');
-  mainpage.classList.remove("displayBlock");
-  mainpage.classList.add("displayBlur");
-  containerLogIn.classList.remove("displayHide");
-  containerLogIn.classList.add("displayBlock");
-});
-
-function deleteCookie(){                                              // Wie kann man das kürzer schreiben?
-  document.cookie = 'userName' + '=0; expires=Thu, 18 Dec 2013 12:00:00 UTC'; 
-  document.cookie = 'passwort' + '=0; expires=Thu, 18 Dec 2013 12:00:00 UTC';
-  document.cookie = 'logged_in' + '=0; expires=Thu, 18 Dec 2013 12:00:00 UTC';
-};
+// ------------------------ Log out
