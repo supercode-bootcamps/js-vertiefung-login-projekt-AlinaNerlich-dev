@@ -44,6 +44,17 @@ input {
   margin: 1rem 3rem;
   width: 600px;
 }
+.star1 {
+  position: absolute;
+  right: 7rem;
+  top: 10rem;
+}
+
+.star2 {
+  position: absolute;
+  right: 7rem;
+  top: 15rem;
+}
 
 /* HTML CSS*/
 
